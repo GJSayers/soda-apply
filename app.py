@@ -97,9 +97,11 @@ def user_create_profile():
 def user_edit_profile():
     return render_template('pages/user_edit_profile.html')
 
-@app.route("/profile")
-def profile():
-    return render_template('pages/profile.html')
+@app.route("/profile/<full_name>")
+def profile(full_name):
+    full_name = mongo.db.users.find_one(
+        {"full_name": session["user"]})["full_name"]
+    return render_template('pages/profile.html', full_name=full_name)
 
 
 @app.route("/login", methods=["GET", "POST"])
